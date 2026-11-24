@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DocLogic • Deterministic Document QA System (AID201A)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Client-Side Document Parsers for .docx and .pdf (Pure Client-Side / Zero Node Backend) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          boxShadow: {
+            'brutal': '4px 4px 0px #0F172A',
+            'brutal-sm': '2px 2px 0px #0F172A',
+            'brutal-lg': '6px 6px 0px #0F172A',
+            'cyber': '4px 4px 0px rgba(190, 242, 100, 0.3)',
+            'cyber-sm': '2px 2px 0px rgba(190, 242, 100, 0.4)'
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.35); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.6); }
+
+    #rulesTable td, #factsTable td {
+      word-break: break-word;
+      overflow-wrap: break-word;
+      white-space: normal;
+      line-height: 1.375;
+    }
+  </style>
+</head>
+<body class="bg-[#F8FAFC] dark:bg-[#09090B] text-slate-900 dark:text-zinc-100 font-sans min-h-screen transition-colors duration-200 overflow-x-hidden selection:bg-[#BEF264] selection:text-slate-950">
+
+  <!-- Sticky Full-Width Top Navigation Bar -->
+  <header class="sticky top-0 z-50 w-full border-b-2 border-slate-900 bg-white/90 backdrop-blur-md dark:bg-zinc-950/90 dark:border-white/15 shadow-[0_2px_0px_#0F172A] dark:shadow-none">
+    <div class="max-w-7xl mx-auto px-2.5 sm:px-6 h-16 flex items-center justify-between gap-1 sm:gap-4 min-w-0">
+      <!-- Left: Logo & Brand Title -->
+      <div class="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
+        <span class="px-2 py-0.5 text-[10px] sm:text-xs font-black uppercase tracking-wider bg-[#BEF264] text-slate-950 rounded-md border-2 border-slate-900 shadow-brutal-sm shrink-0">AID201A</span>
+        <div class="flex items-center gap-1.5 sm:gap-2 min-w-0">
+          <span class="font-display font-black text-xs sm:text-base md:text-xl text-slate-900 dark:text-white tracking-tight truncate">DocLogic</span>
+          <span class="hidden lg:inline-flex items-center px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-purple-100 text-purple-900 dark:bg-purple-950/60 dark:text-purple-300 rounded border border-purple-300 dark:border-purple-800">Deterministic Engine</span>
+        </div>
+      </div>
+
+      <!-- Right: Compact Controls Row -->
+      <div class="flex items-center gap-1 sm:gap-2 shrink-0">
+        <!-- Theme Toggle Button -->
+        <button id="darkToggle" class="h-9 px-2 sm:px-2.5 font-display font-bold text-xs rounded-lg border-2 border-slate-900 dark:border-white/20 bg-amber-300 dark:bg-zinc-800 text-slate-950 dark:text-amber-300 shadow-brutal-sm dark:shadow-none hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all flex items-center justify-center gap-1 shrink-0 cursor-pointer" title="Toggle Light/Dark Theme">
+          <span>🌓</span>
+          <span class="font-black hidden md:inline">Theme</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Bento Container -->
+  <main class="max-w-7xl mx-auto p-3 sm:p-4 md:p-6 space-y-4 lg:space-y-3.5 min-w-0">
+
+    <!-- Top Bento Grid: Panel 1 & Panel 2 -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-3.5 min-w-0">
+
+      <!-- Panel 1: Document Processing & KB Construction (Bento Card) -->
+      <section class="lg:col-span-5 bg-white dark:bg-zinc-900/80 dark:backdrop-blur-md border-2 border-slate-900 dark:border-white/15 rounded-2xl p-4 sm:p-5 shadow-brutal dark:shadow-[4px_4px_0px_rgba(255,255,255,0.06)] flex flex-col gap-3.5 h-full min-w-0">
+        <div class="flex items-center justify-between pb-2.5 border-b-2 border-slate-900/10 dark:border-white/10 gap-2 flex-wrap">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block"></span>
+              <h2 class="text-xs sm:text-sm font-display font-black uppercase tracking-wider text-slate-900 dark:text-zinc-100">Panel 1: Policy Document & Parser</h2>
+            </div>
+            <p class="text-[11px] text-slate-500 dark:text-zinc-400 mt-0.5 font-medium">Upload or enter document facts & rules to construct Knowledge Base</p>
+          </div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <button id="btnLoadSample" type="button" class="text-xs font-display font-bold px-3 min-h-[44px] flex items-center bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-800 dark:text-zinc-200 border-2 border-slate-900 dark:border-white/20 rounded-xl shadow-brutal-sm dark:shadow-none hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all shrink-0 cursor-pointer" title="Load sample academic policy document">
+              Sample Doc
+            </button>
+            <label class="cursor-pointer text-xs font-display font-bold px-3 min-h-[44px] flex items-center gap-1.5 bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/60 dark:hover:bg-blue-900/60 text-blue-900 dark:text-blue-200 border-2 border-slate-900 dark:border-white/20 rounded-xl shadow-brutal-sm dark:shadow-none hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all shrink-0" title="Upload .txt, .pdf, or .docx document">
+              <span>📁</span>
+              <span>Upload (.txt, .pdf, .docx)</span>
+              <input type="file" id="fileInput" accept=".txt,.pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="hidden">
+            </label>
+            <button id="btnClearDoc" type="button" class="text-xs font-display font-bold px-3 min-h-[44px] flex items-center gap-1 bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-900/50 text-rose-700 dark:text-rose-300 border-2 border-slate-900 dark:border-white/20 rounded-xl shadow-brutal-sm dark:shadow-none hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all shrink-0 cursor-pointer" title="Clear document and reset Knowledge Base">
+              <span>🗑️</span>
+              <span>Clear</span>
+            </button>
+          </div>
+        </div>
+
+        <textarea id="docEditor" placeholder="# Upload a document (.txt, .pdf, .docx) or enter facts & Horn rules here...&#10;&#10;# FORMAT EXAMPLE:&#10;Alice department CS&#10;Alice gpa 3.8&#10;&#10;RULE R1: IF ?s gpa >= 3.5 THEN ?s honors_list true" class="flex-1 min-h-[260px] h-full w-full font-mono text-[11px] leading-relaxed p-3 bg-slate-50 dark:bg-black/40 text-slate-900 dark:text-zinc-200 border-2 border-slate-900 dark:border-white/15 rounded-xl outline-none focus:border-blue-600 dark:focus:border-[#BEF264] resize-none min-w-0 shadow-[inset_0_1px_3px_rgba(0,0,0,0.06)]"></textarea>
+
+        <button id="btnBuildKB" class="w-full min-h-[44px] py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white dark:bg-[#BEF264] dark:hover:bg-[#a8dc4e] dark:text-slate-950 font-display font-black text-xs uppercase tracking-wider rounded-xl border-2 border-slate-900 dark:border-white/20 shadow-brutal-sm dark:shadow-none hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all flex items-center justify-center text-center whitespace-normal leading-snug">
+          Build Knowledge Base (Deterministic FOL Extraction)
+        </button>
+      </section>
+
+      <!-- Panel 2: Symbolic Knowledge Base Viewer (Bento Card) -->
+      <section class="lg:col-span-7 bg-white dark:bg-zinc-900/80 dark:backdrop-blur-md border-2 border-slate-900 dark:border-white/15 rounded-2xl p-4 sm:p-5 shadow-brutal dark:shadow-[4px_4px_0px_rgba(255,255,255,0.06)] flex flex-col min-w-0">
+        <div class="pb-2.5 border-b-2 border-slate-900/10 dark:border-white/10 flex items-center justify-between">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span>
+              <h2 class="text-xs sm:text-sm font-display font-black uppercase tracking-wider text-slate-900 dark:text-zinc-100">Panel 2: Symbolic Knowledge Base Viewer</h2>
+            </div>
+            <p class="text-[11px] text-slate-500 dark:text-zinc-400 mt-0.5 font-medium">Extracted FOL Ground Triples & Horn-Clause Production Rules</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 mt-3 flex-1 min-w-0">
+          <!-- Facts Table Bento Item -->
+          <div class="border-2 border-slate-900 dark:border-white/15 rounded-xl flex flex-col overflow-hidden min-w-0 shadow-brutal-sm dark:shadow-none bg-slate-50 dark:bg-black/30">
+            <div class="bg-slate-100 dark:bg-zinc-800/90 px-3 py-2 border-b-2 border-slate-900 dark:border-white/15 flex justify-between items-center shrink-0">
+              <span class="text-xs font-display font-bold text-slate-800 dark:text-zinc-200">FOL Ground Facts</span>
+              <span id="factCount" class="text-xs font-mono font-black px-2.5 py-0.5 bg-blue-100 text-blue-950 dark:bg-blue-900/60 dark:text-blue-300 rounded-md border border-blue-400 dark:border-blue-700">0</span>
+            </div>
+            <div class="overflow-y-auto overflow-x-hidden max-h-[340px] flex-1 min-w-0">
+              <table class="w-full table-fixed text-center border-collapse">
+                <thead class="bg-slate-200/70 dark:bg-zinc-800 sticky top-0 border-b border-slate-300 dark:border-zinc-700 text-[10px] font-display font-bold uppercase tracking-wider text-slate-600 dark:text-zinc-400">
+                  <tr>
+                    <th class="p-2 w-[28%] text-center">Subject</th>
+                    <th class="p-2 w-[44%] text-center">Predicate</th>
+                    <th class="p-2 w-[28%] text-center">Object</th>
+                  </tr>
+                </thead>
+                <tbody id="factsTable" class="divide-y divide-slate-200 dark:divide-zinc-800 text-xs font-mono"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Rules Table Bento Item -->
+          <div class="border-2 border-slate-900 dark:border-white/15 rounded-xl flex flex-col overflow-hidden min-w-0 shadow-brutal-sm dark:shadow-none bg-slate-50 dark:bg-black/30">
+            <div class="bg-slate-100 dark:bg-zinc-800/90 px-3 py-2 border-b-2 border-slate-900 dark:border-white/15 flex justify-between items-center shrink-0">
+              <span class="text-xs font-display font-bold text-slate-800 dark:text-zinc-200">Horn-Clause Rules</span>
+              <span id="ruleCount" class="text-xs font-mono font-black px-2.5 py-0.5 bg-amber-100 text-amber-950 dark:bg-amber-900/60 dark:text-amber-300 rounded-md border border-amber-400 dark:border-amber-700">0</span>
+            </div>
+            <div class="overflow-y-auto overflow-x-hidden max-h-[340px] flex-1 min-w-0">
+              <table class="w-full table-fixed text-center border-collapse">
+                <thead class="bg-slate-200/70 dark:bg-zinc-800 sticky top-0 border-b border-slate-300 dark:border-zinc-700 text-[10px] font-display font-bold uppercase tracking-wider text-slate-600 dark:text-zinc-400">
+                  <tr>
+                    <th class="p-2 w-14 sm:w-16 text-center">Rule ID</th>
+                    <th class="p-2 w-[52%] text-center">Premises (IF)</th>
+                    <th class="p-2 w-[34%] text-center">Head (THEN)</th>
+                  </tr>
+                </thead>
+                <tbody id="rulesTable" class="divide-y divide-slate-200 dark:divide-zinc-800 text-xs"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Panel 3: Question Processing & Reasoning Trace (Bento Card) -->
+    <section class="bg-white dark:bg-zinc-900/80 dark:backdrop-blur-md border-2 border-slate-900 dark:border-white/15 rounded-2xl p-4 sm:p-5 shadow-brutal dark:shadow-[4px_4px_0px_rgba(255,255,255,0.06)] space-y-3.5 min-w-0">
+      <div class="border-b-2 border-slate-900/10 dark:border-white/10 pb-2.5">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
+          <h2 class="text-xs sm:text-sm font-display font-black uppercase tracking-wider text-slate-900 dark:text-zinc-100">Panel 3: Question Processing & Inference Trace</h2>
+        </div>
+        <p class="text-[11px] text-slate-500 dark:text-zinc-400 mt-0.5 font-medium">Deterministic Pattern Mapping, Chaining Proof & Deductive Explanatory Audit Trail</p>
+      </div>
+
+      <!-- Presets & Query Input -->
+      <div class="space-y-2.5 min-w-0">
+        <div id="presetContainer" class="flex items-center gap-2 flex-wrap text-xs">
+          <span class="font-display font-bold text-slate-600 dark:text-zinc-400 mr-1 flex items-center gap-1">⚡ Presets:</span>
+          <span class="text-xs text-slate-400 dark:text-zinc-500 italic">Upload a document to generate query presets</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-2.5 min-w-0">
+          <input type="text" id="queryInput" placeholder="Enter query (e.g. 'What is the attendance of Rahul?', 'Is Rahul academically eligible?')" class="flex-1 min-h-[46px] px-4 py-2.5 text-xs md:text-sm font-medium border-2 border-slate-900 dark:border-white/20 bg-slate-50 dark:bg-black/40 text-slate-900 dark:text-white rounded-xl outline-none focus:border-blue-600 dark:focus:border-[#BEF264] shadow-brutal-sm dark:shadow-none min-w-0">
+          <button id="btnAsk" class="min-h-[46px] px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white dark:bg-[#BEF264] dark:hover:bg-[#a8dc4e] dark:text-slate-950 font-display font-black text-xs uppercase tracking-wider rounded-xl border-2 border-slate-900 dark:border-white/20 shadow-brutal-sm dark:shadow-none hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all flex items-center justify-center shrink-0">
+            Run Proof
+          </button>
+        </div>
+      </div>
+
+      <!-- Execution Status Bar Bento Item -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3 bg-slate-50 dark:bg-black/30 border-2 border-slate-900 dark:border-white/15 rounded-xl shadow-brutal-sm dark:shadow-none min-w-0">
+        <div class="min-w-0">
+          <span class="text-[10px] font-display font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider block">Parsed Goal Predicate</span>
+          <span id="goalDisplay" class="font-mono text-xs font-bold text-blue-700 dark:text-blue-400 break-all">-</span>
+        </div>
+        <div class="min-w-0">
+          <span class="text-[10px] font-display font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider block">Inference Decision & Value</span>
+          <span id="statusBadge" class="inline-block mt-0.5 px-3 py-0.5 text-xs font-bold rounded-full bg-slate-200 text-slate-700 border border-slate-400 dark:border-zinc-700">-</span>
+        </div>
+        <div class="min-w-0">
+          <span class="text-[10px] font-display font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider block">Latency / Proof Hops</span>
+          <span id="latencyDisplay" class="font-mono text-xs font-bold text-slate-800 dark:text-zinc-200">-</span>
+        </div>
+      </div>
+
+      <!-- Reasoning Trace (Terminal-Style Box) -->
+      <div class="min-w-0">
+        <div class="flex items-center justify-between mb-1.5">
+          <h3 class="text-xs font-display font-bold text-slate-700 dark:text-zinc-300 uppercase tracking-wider">Step-by-Step Inference Trace</h3>
+          <span class="text-[10px] font-mono text-slate-500 dark:text-zinc-500">Audit Trail</span>
+        </div>
+        <div class="p-3 bg-slate-900 text-slate-100 dark:bg-black/80 dark:text-emerald-300 border-2 border-slate-900 dark:border-white/15 rounded-xl max-h-40 lg:max-h-36 overflow-y-auto min-w-0 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)]">
+          <ul id="traceList" class="space-y-1">
+            <li class="p-3 text-center text-slate-400 dark:text-zinc-500 font-sans text-xs">Upload a document and run a proof to inspect the deductive inference trace.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Panel 4: Evaluation Benchmark (Bento Card) -->
+    <section class="bg-white dark:bg-zinc-900/80 dark:backdrop-blur-md border-2 border-slate-900 dark:border-white/15 rounded-2xl p-4 sm:p-5 shadow-brutal dark:shadow-[4px_4px_0px_rgba(255,255,255,0.06)] space-y-4 min-w-0">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b-2 border-slate-900/10 dark:border-white/10 pb-2.5">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-purple-500 inline-block"></span>
+            <h2 class="text-xs sm:text-sm font-display font-black uppercase tracking-wider text-slate-900 dark:text-zinc-100">Panel 4: Evaluation Benchmark</h2>
+          </div>
+          <p class="text-[11px] text-slate-500 dark:text-zinc-400 mt-0.5 font-medium">1-Hop Ground Lookups, Multi-Hop Horn Deductions & Closed-World Assumption Validation</p>
+        </div>
+        <button id="btnRunBenchmark" class="min-h-[44px] px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white dark:bg-[#A855F7] dark:hover:bg-[#9333EA] dark:text-white font-display font-black text-xs uppercase tracking-wider rounded-xl border-2 border-slate-900 dark:border-white/20 shadow-brutal-sm dark:shadow-none hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all flex items-center justify-center shrink-0 self-start sm:self-auto">
+          Run Evaluation Suite
+        </button>
+      </div>
+
+      <!-- KPI Metrics (4 Bento Metric Blocks) -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 min-w-0">
+        <div class="p-3 bg-emerald-50 dark:bg-emerald-950/20 border-2 border-slate-900 dark:border-emerald-500/30 rounded-xl text-center min-w-0 shadow-brutal-sm dark:shadow-none">
+          <span class="text-[11px] font-display font-bold text-slate-600 dark:text-emerald-400 uppercase tracking-wider block">Accuracy</span>
+          <span id="metricAccuracy" class="text-xl sm:text-2xl lg:text-3xl font-display font-black text-emerald-700 dark:text-[#BEF264] font-mono">-%</span>
+        </div>
+        <div class="p-3 bg-blue-50 dark:bg-blue-950/20 border-2 border-slate-900 dark:border-blue-500/30 rounded-xl text-center min-w-0 shadow-brutal-sm dark:shadow-none">
+          <span class="text-[11px] font-display font-bold text-slate-600 dark:text-blue-400 uppercase tracking-wider block">Precision</span>
+          <span id="metricPrecision" class="text-xl sm:text-2xl lg:text-3xl font-display font-black text-blue-700 dark:text-blue-400 font-mono">-</span>
+        </div>
+        <div class="p-3 bg-purple-50 dark:bg-purple-950/20 border-2 border-slate-900 dark:border-purple-500/30 rounded-xl text-center min-w-0 shadow-brutal-sm dark:shadow-none">
+          <span class="text-[11px] font-display font-bold text-slate-600 dark:text-purple-400 uppercase tracking-wider block">Recall</span>
+          <span id="metricRecall" class="text-xl sm:text-2xl lg:text-3xl font-display font-black text-purple-700 dark:text-[#A855F7] font-mono">-</span>
+        </div>
+        <div class="p-3 bg-amber-50 dark:bg-amber-950/20 border-2 border-slate-900 dark:border-amber-500/30 rounded-xl text-center min-w-0 shadow-brutal-sm dark:shadow-none">
+          <span class="text-[11px] font-display font-bold text-slate-600 dark:text-amber-400 uppercase tracking-wider block">Avg Latency</span>
+          <span id="metricLatency" class="text-xl sm:text-2xl lg:text-3xl font-display font-black text-amber-700 dark:text-amber-400 font-mono">- ms</span>
+        </div>
+      </div>
+
+      <!-- Test Cases Table Bento Item -->
+      <div class="overflow-x-auto border-2 border-slate-900 dark:border-white/15 rounded-xl min-w-0 shadow-brutal-sm dark:shadow-none bg-slate-50 dark:bg-black/30">
+        <table class="w-full min-w-max text-left border-collapse">
+          <thead class="bg-slate-200/70 dark:bg-zinc-800 text-[10px] font-display font-bold text-slate-700 dark:text-zinc-300 uppercase tracking-wider border-b-2 border-slate-900 dark:border-white/15">
+            <tr>
+              <th class="p-2.5">Test ID</th>
+              <th class="p-2.5">Category</th>
+              <th class="p-2.5">Evaluation Query</th>
+              <th class="p-2.5">Expected</th>
+              <th class="p-2.5">Actual Decision</th>
+              <th class="p-2.5 text-center">Status</th>
+              <th class="p-2.5">Latency</th>
+            </tr>
+          </thead>
+          <tbody id="benchmarkTable" class="divide-y divide-slate-200 dark:divide-zinc-800 font-mono text-xs"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full border-t border-slate-200 dark:border-white/10 py-6 text-center">
+    <p class="text-xs text-slate-500 dark:text-zinc-400 font-mono tracking-wide">
+      &copy; 2026 Arnav Jhawar &bull; 25ETAI410018
+    </p>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DocLogic IEEE Report - AID201A</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 0.75in 0.65in 0.75in 0.65in;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 10pt;
+      line-height: 1.35;
+      color: #000;
+      margin: 0 auto;
+      padding: 0.5in;
+      background: #fff;
+      max-width: 8.5in;
+    }
+    .header-block {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+    h1.paper-title {
+      font-size: 19pt;
+      font-weight: bold;
+      margin: 0 0 10px 0;
+      line-height: 1.25;
+    }
+    .author-name {
+      font-size: 11pt;
+      font-weight: bold;
+      margin: 4px 0 2px 0;
+    }
+    .author-meta {
+      font-size: 9pt;
+      color: #222;
+      line-height: 1.3;
+    }
+    .two-col {
+      column-count: 2;
+      column-gap: 0.3in;
+      text-align: justify;
+    }
+    h2 {
+      font-size: 10pt;
+      text-transform: uppercase;
+      font-weight: bold;
+      text-align: center;
+      margin: 14px 0 6px 0;
+      letter-spacing: 0.5px;
+      break-after: avoid;
+    }
+    h3 {
+      font-size: 9.5pt;
+      font-weight: bold;
+      font-style: italic;
+      margin: 10px 0 4px 0;
+      break-after: avoid;
+    }
+    p {
+      margin: 0 0 8px 0;
+      text-indent: 1.2em;
+    }
+    p.no-indent { text-indent: 0; }
+    .abstract-box {
+      font-size: 9pt;
+      margin-bottom: 12px;
+      text-align: justify;
+    }
+    .abstract-title {
+      font-weight: bold;
+      font-style: italic;
+    }
+    .keywords {
+      font-size: 9pt;
+      font-weight: bold;
+      font-style: italic;
+      margin-top: 6px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 8pt;
+      margin: 10px 0;
+      break-inside: avoid;
+    }
+    th, td {
+      border: 1px solid #333;
+      padding: 4px 5px;
+      text-align: left;
+    }
+    th {
+      background: #f0f0f0;
+      font-weight: bold;
+      text-align: center;
+    }
+    td.center, th.center { text-align: center; }
+    .fig-box {
+      margin: 12px 0;
+      text-align: center;
+      break-inside: avoid;
+    }
+    .fig-box img {
+      width: 100%;
+      border: 1px solid #444;
+      border-radius: 4px;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .fig-caption {
+      font-size: 8pt;
+      font-weight: bold;
+      text-align: center;
+      color: #333;
+    }
+    pre, code {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 7.5pt;
+      background: #f7f7f7;
+    }
+    pre {
+      padding: 6px;
+      border: 1px solid #ccc;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      break-inside: avoid;
+      margin: 8px 0;
+    }
+    .formula {
+      text-align: center;
+      margin: 6px 0;
+      font-style: italic;
+      font-size: 9pt;
+    }
+    ol.refs {
+      padding-left: 18px;
+      margin: 4px 0;
+      font-size: 8pt;
+    }
+    ol.refs li {
+      margin-bottom: 4px;
+      text-indent: 0;
+    }
+    @media print {
+      body { padding: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Banner -->
+  <div class="header-block">
+    <h1 class="paper-title">DocLogic: A Deterministic First-Order Logic and Horn-Clause Inference System for Verifiable Document Question Answering</h1>
+    <div class="author-name">Arnav Jhawar (Reg. No: 25ETAI410018)</div>
+    <div class="author-meta">
+      Department of Computer Science and Engineering, Faculty of Engineering & Technology<br>
+      Ramaiah University of Applied Sciences (RUAS), Bengaluru, India<br>
+      <strong>Course:</strong> AID201A &mdash; Artificial Intelligence &bull; <strong>Course Leader:</strong> M Tanushri
+    </div>
+  </div>
+
+  <div class="two-col">
+
+    <!-- Abstract -->
+    <div class="abstract-box">
+      <span class="abstract-title">Abstract</span>&mdash;This paper presents the formal specification, architecture, and empirical verification of <strong>DocLogic</strong>, a deterministic Document Question Answering system engineered strictly under classical Symbolic Artificial Intelligence principles. In strict compliance with the AID201A assignment mandate, the system explicitly rejects statistical Natural Language Processing (NLP), embeddings, and Retrieval-Augmented Generation (RAG). Documents are parsed into a normalized Knowledge Base of First-Order Logic (FOL) ground relational triples and definite Horn-clause production rules. Question evaluation is conducted via pattern-directed goal extraction and dual inference engines: Goal-Driven Backward Chaining and Deductive Closure Forward Chaining. Open and negative queries are handled under the Closed-World Assumption (CWA). Across a 10-query empirical benchmark, DocLogic establishes 100% Accuracy, 1.00 Precision, 1.00 Recall, and an average inference latency of 0.10 ms with complete proof auditability and zero hallucination.
+      <div class="keywords">Keywords&mdash;Symbolic Artificial Intelligence, First-Order Logic, Horn Clauses, Backward Chaining, Forward Chaining, Closed-World Assumption, Deterministic Document QA.</div>
+    </div>
+
+    <h2>I. Introduction</h2>
+    <p>Contemporary document question answering systems rely heavily on probabilistic Large Language Models (LLMs) and vector-similarity Retrieval-Augmented Generation (RAG). While linguistically proficient, statistical models suffer from well-documented systemic failures: stochastic hallucinations, mathematical unverifiability, unfaithful post-hoc reasoning, and high computational latency.</p>
+    <p>In high-stakes compliance contexts—such as university academic eligibility, examination regulations, and financial audits—probabilistic guessing is unacceptable. An automated system must deliver sound mathematical deduction, absolute determinism, and a verifiable step-by-step explanatory proof trace.</p>
+    <p>In accordance with the MSRUAS AID201A curriculum, this project models document intelligence through pure Symbolic AI. The core contributions of this work are threefold: (1) client-side multi-format document ingestion (.txt, .docx, .pdf) extracting normalized FOL triples without server dependencies; (2) dual deterministic inference engines implementing Backward and Forward Chaining; and (3) complete explanatory audit trails with empirical benchmark evaluation.</p>
+
+    <h2>II. Knowledge Representation & Architecture</h2>
+    <p>The system models knowledge as a formal tuple $\mathcal{K} = \langle \mathcal{F}, \mathcal{R} angle$, where $\mathcal{F}$ is a set of First-Order ground relational triples and $\mathcal{R}$ is a set of definite Horn-clause production rules.</p>
+
+    <h3>A. First-Order Ground Facts</h3>
+    <p>Every documented empirical entity property is represented as a normalized triple:</p>
+    <div class="formula">Predicate(Subject, Object)</div>
+    <p>For example: <em>attendance(Rahul, 85)</em>, <em>cie_marks(Rahul, 38)</em>, <em>fee_status(Rahul, cleared)</em>, and <em>lab_completed(Rahul, true)</em>.</p>
+
+    <h3>B. Horn-Clause Production Rules</h3>
+    <p>Institutional policies are expressed as universally quantified definite Horn clauses of the form:</p>
+    <div class="formula">&forall; s [ C<sub>1</sub>(s) &and; C<sub>2</sub>(s) &and; ... &and; C<sub>k</sub>(s) &rArr; H(s) ]</div>
+    <p class="no-indent">where each condition $C_i(s)$ specifies a relational predicate comparison. The MSRUAS academic eligibility domain is governed by 6 canonical rules:</p>
+    <p><strong>R1:</strong> IF attendance &ge; 75 &and; cie_marks &ge; 20 THEN academic_eligible = true.<br>
+    <strong>R2:</strong> IF academic_eligible == true &and; lab_completed == true THEN internal_cleared = true.<br>
+    <strong>R3:</strong> IF internal_cleared == true &and; fee_status == cleared THEN hall_ticket_approved = true.<br>
+    <strong>R4:</strong> IF hall_ticket_approved == true &and; prerequisites_met == true THEN can_sit_for_exam = true.<br>
+    <strong>R5:</strong> IF attendance &ge; 85 &and; cie_marks &ge; 40 THEN honors_eligible = true.<br>
+    <strong>R6:</strong> IF attendance &lt; 75 THEN condonation_required = true.</p>
+
+    <div class="fig-box">
+      <img src="screenshots/1_kb_construction.png" alt="Panel 1 & Panel 2 KB Construction">
+      <div class="fig-caption">Fig. 1. Multi-format policy parser (Panel 1) and extracted FOL Ground Facts and Horn-Clause Rules (Panel 2).</div>
+    </div>
+
+    <h2>III. Question Processing & Inference Engine</h2>
+    <p>User queries are parsed using deterministic pattern unification into First-Order target goal tuples:</p>
+    <div class="formula">Goal = &lang; Subject, Predicate, TargetValue &rang;</div>
+
+    <h3>A. Goal-Driven Backward Chaining</h3>
+    <p>The primary reasoning engine executes top-down SLD-resolution. To prove a goal $G$:</p>
+    <p>1. <em>Ground Fact Check:</em> If $\langle G.	ext{subj}, G.	ext{pred}, v angle \in \mathcal{F}$, verify whether $v$ satisfies $G.	ext{target}$. If matched, the goal is PROVED (hop = 1).</p>
+    <p>2. <em>Horn-Clause Resolution:</em> If unproven by base facts, locate candidate rules whose conclusion head matches $G.	ext{pred}$.</p>
+    <p>3. <em>Sub-Goal Recursion:</em> For each condition in the rule body, instantiate a sub-goal and evaluate recursively. A visited set prevents infinite circular loops.</p>
+    <p>4. <em>Proof Synthesis:</em> If all premises of a rule are satisfied, the goal is marked PROVED with cumulative hop depth $h = 1 + \max_i(h_i)$.</p>
+
+    <div class="fig-box">
+      <img src="screenshots/2_multihop_reasoning.png" alt="Panel 3 Inference Trace">
+      <div class="fig-caption">Fig. 2. 4-hop backward chaining proof trace and audit trail for "Can Rahul sit for exam?" (Panel 3).</div>
+    </div>
+
+    <h3>B. Closed-World Assumption (CWA)</h3>
+    <p>Negation is handled via formal Negation as Failure. If a proposition cannot be derived from $\mathcal{K}$, it is declared UNPROVABLE (False). For example, Amit fails Rule R2 because <em>lab_completed = false</em>, making the query <em>"Can Amit sit for exam?"</em> provably False.</p>
+
+    <h2>IV. Experimental Results & Benchmark</h2>
+    <p>DocLogic was empirically evaluated against a 10-query benchmark encompassing 1-hop lookups, multi-hop deductions, and negative closed-world tests.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th class="center">ID</th>
+          <th>Category</th>
+          <th>Query</th>
+          <th class="center">Expected</th>
+          <th class="center">Actual</th>
+          <th class="center">Status</th>
+          <th class="center">Latency</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="center">TC01</td><td>1-hop</td><td>Attendance of Rahul?</td><td class="center">85</td><td class="center">85</td><td class="center">PASS</td><td class="center">0.08 ms</td></tr>
+        <tr><td class="center">TC02</td><td>1-hop</td><td>CIE marks of Priya?</td><td class="center">18</td><td class="center">18</td><td class="center">PASS</td><td class="center">0.07 ms</td></tr>
+        <tr><td class="center">TC03</td><td>1-hop</td><td>Fee status of Amit?</td><td class="center">pending</td><td class="center">pending</td><td class="center">PASS</td><td class="center">0.07 ms</td></tr>
+        <tr><td class="center">TC04</td><td>1-hop</td><td>Lab completed Sneha?</td><td class="center">true</td><td class="center">true</td><td class="center">PASS</td><td class="center">0.06 ms</td></tr>
+        <tr><td class="center">TC05</td><td>Multi-hop</td><td>Is Rahul academic eligible?</td><td class="center">true</td><td class="center">true</td><td class="center">PASS</td><td class="center">0.11 ms</td></tr>
+        <tr><td class="center">TC06</td><td>Multi-hop</td><td>Can Rahul sit for exam?</td><td class="center">true</td><td class="center">true</td><td class="center">PASS</td><td class="center">0.18 ms</td></tr>
+        <tr><td class="center">TC07</td><td>Multi-hop</td><td>Is Sneha honors eligible?</td><td class="center">true</td><td class="center">true</td><td class="center">PASS</td><td class="center">0.10 ms</td></tr>
+        <tr><td class="center">TC08</td><td>Multi-hop</td><td>Priya condonation?</td><td class="center">true</td><td class="center">true</td><td class="center">PASS</td><td class="center">0.09 ms</td></tr>
+        <tr><td class="center">TC09</td><td>Neg CWA</td><td>Can Amit sit for exam?</td><td class="center">false</td><td class="center">UNPROVABLE</td><td class="center">PASS</td><td class="center">0.14 ms</td></tr>
+        <tr><td class="center">TC10</td><td>Neg CWA</td><td>Can Priya sit for exam?</td><td class="center">false</td><td class="center">UNPROVABLE</td><td class="center">PASS</td><td class="center">0.12 ms</td></tr>
+      </tbody>
+    </table>
+
+    <div class="fig-box">
+      <img src="screenshots/3_evaluation_benchmark.png" alt="Panel 4 Benchmark Suite">
+      <div class="fig-caption">Fig. 3. System Evaluation Benchmark Suite and KPI metric cards (Panel 4).</div>
+    </div>
+
+    <h3>A. Quantitative Performance Metrics</h3>
+    <p>Evaluating the binary classification outcomes (8 True Positives, 2 True Negatives, 0 False Positives, 0 False Negatives):</p>
+    <div class="formula">Accuracy = (8 + 2) / 10 = 100.0%</div>
+    <div class="formula">Precision = 8 / (8 + 0) = 1.000</div>
+    <div class="formula">Recall = 8 / (8 + 0) = 1.000</div>
+    <div class="formula">Average Query Latency = 0.102 ms</div>
+
+    <h2>V. Implementation & Code Complexity</h2>
+    <p>To ensure strict academic maintainability and report readability, every JavaScript module is strictly capped under 160 lines:</p>
+    <p>&bull; <strong>js/kb_parser.js:</strong> 79 lines (FOL triple & Horn rule parsing).<br>
+    &bull; <strong>js/inference_engine.js:</strong> 120 lines (Goal extraction & chaining engines).<br>
+    &bull; <strong>js/evaluator.js:</strong> 72 lines (Benchmark suite & metrics calculation).<br>
+    &bull; <strong>js/app.js:</strong> 143 lines (DOM bindings & file ingestion).<br>
+    <strong>Total Codebase:</strong> 414 lines of pure, modular ES6 JavaScript.</p>
+
+    <h2>VI. Conclusion</h2>
+    <p>DocLogic confirms that high-precision Document Question Answering can be accomplished reliably without opaque deep neural networks. By combining First-Order Logic ground facts, definite Horn-clause production rules, and backward chaining SLD-resolution, the system guarantees 100% precision, zero hallucination, sub-millisecond execution, and total explanatory transparency, fulfilling all requirements of the AID201A assignment.</p>
+
+    <h2>References</h2>
+    <ol class="refs">
+      <li>S. Russell and P. Norvig, <em>Artificial Intelligence: A Modern Approach</em>, 4th ed., Pearson, 2020, ch. 7&ndash;9.</li>
+      <li>R. A. Kowalski, "Algorithm = Logic + Control," <em>CACM</em>, vol. 22, no. 7, pp. 424&ndash;436, 1979.</li>
+      <li>J. W. Lloyd, <em>Foundations of Logic Programming</em>, 2nd ed., Springer-Verlag, 1987.</li>
+      <li>N. J. Nilsson, <em>Principles of Artificial Intelligence</em>, Tioga Publishing Co., 1980.</li>
+    </ol>
+
+  </div>
+</body>
+</html>

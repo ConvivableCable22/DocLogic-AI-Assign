@@ -1,0 +1,60 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 842] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 1033 >>
+stream
+BT
+/F1 10 Tf
+14 TL
+40 780 Td
+(# MSRUAS Central Library Clearance & Access Policy) Tj
+T* () Tj
+T* (# FACTS: Student Library and Resource Clearance Records) Tj
+T* (Kavya library_dues 0) Tj
+T* (Kavya books_returned true) Tj
+T* (Kavya research_credits 12) Tj
+T* (Kavya id_verified true) Tj
+T* () Tj
+T* (Karthik library_dues 450) Tj
+T* (Karthik books_returned false) Tj
+T* (Karthik research_credits 4) Tj
+T* (Karthik id_verified true) Tj
+T* () Tj
+T* (Divya library_dues 0) Tj
+T* (Divya books_returned true) Tj
+T* (Divya research_credits 6) Tj
+T* (Divya id_verified true) Tj
+T* () Tj
+T* (# HORN RULES: Library Clearance & Digital Access Inference Engine) Tj
+T* (RULE R1: IF ?s library_dues <= 0 AND ?s books_returned == true THEN ?s library_cleared true) Tj
+T* (RULE R2: IF ?s library_cleared == true AND ?s id_verified == true THEN ?s card_renewed true) Tj
+T* (RULE R3: IF ?s card_renewed == true AND ?s research_credits >= 10 THEN ?s digital_repository_access true) Tj
+T* (RULE R4: IF ?s library_dues > 0 THEN ?s fine_pending true) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000121 00000 n 
+0000000247 00000 n 
+0000001332 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1400
+%%EOF
