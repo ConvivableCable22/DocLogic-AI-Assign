@@ -626,84 +626,50 @@
 
       <!-- Abstract & Keywords -->
       <div class="abstract-container">
-        <span class="abstract-label">Abstract</span>&mdash;Most modern Document Question Answering (QA) tools rely on
-        statistical Natural Language Processing (NLP) and Retrieval-Augmented Generation (RAG). While useful for general
-        text, those approaches can hallucinate answers and rarely show clear, verifiable steps for how a conclusion was
-        reached. Following the classical Artificial Intelligence principles covered in AID201A, this paper presents a
-        rule-based Document QA system built entirely without NLP, embeddings, or large language models. Instead, it
-        parses structured university policy text into First-Order Logic (FOL) ground triples and Horn-clause rules, then
-        answers queries using both Backward Chaining (goal-driven Depth-First Search) and Forward Chaining (data-driven
-        deductive closure). Tested against a 10-query evaluation suite covering single-fact lookups, multi-rule
-        eligibility checks, and unprovable Closed-World queries, the engine achieves 100% accuracy in under a
-        millisecond.
+        <span class="abstract-label">Abstract</span>&mdash;Popular Document Question Answering (QA) tools today almost universally rely on Large Language Models (LLMs) and vector-based Retrieval-Augmented Generation (RAG). While effective for general conversation, statistical models are prone to hallucinations and cannot provide a verifiable, step-by-step mathematical proof for their answers. For university policies—such as attendance requirements, examination eligibility, and fee clearance—guessing is unacceptable. In accordance with the classical Artificial Intelligence principles taught in AID201A, this paper presents DocLogic: a deterministic, rule-based Document QA system built entirely without NLP libraries, embeddings, or neural networks. The system parses structured university regulations into First-Order Logic (FOL) ground relational triples and definite Horn-clause production rules, then resolves queries using both Backward Chaining (goal-directed Depth-First Search) and Forward Chaining (data-driven deductive closure). Evaluated against a 10-query benchmark covering direct fact retrieval, multi-rule eligibility chains, and unprovable Closed-World queries, the engine achieves 100% accuracy with an average latency of 0.04 ms and a complete, auditable proof trail.
         <div class="keywords-block">
-          <span class="keywords-label">Index Terms</span>&mdash;Symbolic AI, Knowledge Representation, First-Order
-          Logic, Horn Clauses, Forward Chaining, Backward Chaining, Rule-Based QA.
+          <span class="keywords-label">Index Terms</span>&mdash;Symbolic AI, Knowledge Representation, First-Order Logic, Horn Clauses, Forward Chaining, Backward Chaining, Rule-Based QA, Closed-World Assumption.
         </div>
       </div>
 
       <!-- Section I -->
       <h2 class="section-heading">I. INTRODUCTION</h2>
-      <p>Answering questions about academic regulations&mdash;such as exam eligibility, attendance thresholds, or fee
-        clearance&mdash;demands exact rule compliance and clear traceability. Statistical NLP models and vector-based
-        RAG pipelines work well for open-ended text search, but they are probabilistic by nature and cannot guarantee
-        strict logical consistency across multi-step conditions [1].</p>
-      <p>To solve this problem without using NLP libraries or neural models, I designed a knowledge-based agent grounded
-        in symbolic representation and logical inference [1], [2]. Using the <em>MSRUAS B.Tech Academic &amp;
-          Examination Eligibility Policy</em> as the target domain, the system separates declarative policy rules from
-        the reasoning code so every decision can be traced back to exact facts and rules.</p>
+      <p>Deciding whether a student is eligible to take semester examinations or qualify for an honors degree comes down to strict institutional rules. A student must satisfy multiple conditions simultaneously: clearing library and semester dues, maintaining attendance above minimum thresholds, completing laboratory practicals, and passing continuous evaluation tests. When organizations try using modern LLMs or vector-similarity search for these evaluations, they quickly encounter serious reliability issues: probabilistic models can hallucinate facts, miscalculate numerical inequalities, and fail to provide an auditable chain of reasoning [1].</p>
+      <p>To guarantee complete logical consistency, this project implements a pure Symbolic AI agent grounded in classical knowledge representation and automated deduction [1], [2]. Centered on the <em>M.S. Ramaiah University of Applied Sciences (RUAS) Academic &amp; Examination Eligibility Policy</em>, DocLogic cleanly decouples institutional policy rules from the underlying reasoning engine. This separation ensures that every single decision can be directly audited and traced back to specific ground facts and documented rules.</p>
 
       <!-- Section II -->
       <h2 class="section-heading">II. DOCUMENT PROCESSING &amp; KNOWLEDGE REPRESENTATION</h2>
-      <p>The parser module (<code>kb_parser.js</code>) reads plain-text policy documents and converts them line by line
-        into a structured Knowledge Base $KB = (F, R)$ using deterministic string matching:</p>
-      <p><strong>Ground Fact Triples ($F$):</strong> Student records are split into predicate triples written as
-        <code>Predicate(Subject, Object)</code>&mdash;for example, <code>attendance(Rahul, 85)</code> and
-        <code>fee_status(Rahul, cleared)</code>.</p>
-      <p><strong>Horn-Clause Production Rules ($R$):</strong> Policy conditions are stored as definite Horn rules of the
-        form $C_1 \land C_2 \land \dots \land C_n \Rightarrow H$, supporting numeric and boolean comparisons ($\ge$,
-        $\le$, $==$, $!=$) [2].</p>
-      <p><strong>Why This Representation Fits:</strong> Storing facts as relational triples and rules as Horn clauses
-        avoids ambiguity in numeric comparisons (such as checking whether attendance is at least 75% and CIE marks are
-        at least 20) while letting intermediate conclusions chain cleanly into higher-level decisions [3].</p>
+      <p>The parser module (<code>kb_parser.js</code>) processes plain-text university policy documents line by line, compiling them into a structured Knowledge Base $KB = (F, R)$ through deterministic pattern matching without relying on external NLP tokenizers or parsers:</p>
+      <p><strong>Ground Fact Triples ($F$):</strong> Individual student records and institutional statuses are converted into normalized relational triples formatted as <code>Predicate(Subject, Object)</code>. For example, student data translates into ground facts like <code>attendance(Rahul, 85)</code>, <code>cie_marks(Rahul, 38)</code>, and <code>fee_status(Rahul, cleared)</code>.</p>
+      <p><strong>Horn-Clause Production Rules ($R$):</strong> University regulations are formulated as definite Horn clauses in the standard canonical form $C_1 \land C_2 \land \dots \land C_n \Rightarrow H$. Each premise $C_i$ checks numeric comparisons ($\ge$, $\le$, $>$, $<$) or boolean equivalence ($==$, $!=$) against student attributes [2]. For instance, Rule R1 verifies that a student has at least 75% attendance and 20 marks in CIE before declaring them academically eligible.</p>
+      <p><strong>Why This Representation Works:</strong> Storing facts as relational triples and policies as Horn clauses eliminates ambiguity when evaluating numeric thresholds (such as distinguishing between $> 75$ and $\ge 75$). It also allows intermediate conclusions—such as obtaining hall ticket approval—to seamlessly feed as premises into higher-level rules like final exam clearance [3].</p>
 
       <!-- Figure 1 -->
       <div class="figure-block">
         <img src="screenshots/1_kb_construction.png"
           alt="DocLogic Policy Document Parser and Knowledge Base Construction">
-        <div class="figure-caption">Fig. 1. Policy document parser and Symbolic Knowledge Base viewer displaying 20
-          extracted FOL ground triples and 6 Horn-clause rules.</div>
+        <div class="figure-caption">Fig. 1. Policy document parser and Symbolic Knowledge Base viewer displaying 20 extracted FOL ground triples and 6 Horn-clause rules.</div>
       </div>
 
       <!-- Section III -->
       <h2 class="section-heading">III. QUESTION PROCESSING &amp; REASONING ENGINE</h2>
       <h3 class="sub-heading">A. Deterministic Goal Extraction</h3>
-      <p>Rather than using an NLP tokenizer, user questions are matched against deterministic regular-expression
-        patterns. Questions like <em>"Can Rahul sit for exam?"</em> or <em>"What is the attendance of Priya?"</em> are
-        converted directly into structured goal queries of the form
-        <code>Goal(Entity, TargetPredicate, ExpectedValue)</code>.</p>
+      <p>Rather than using statistical NLP tokenizers, user questions are parsed against deterministic regular-expression templates. Queries such as <em>"Can Rahul sit for exam?"</em> or <em>"What is the attendance of Priya?"</em> are mapped directly into structured first-order goal tuples: <code>Goal(Entity, TargetPredicate, ExpectedValue)</code>.</p>
 
       <h3 class="sub-heading">B. Dual Chaining Inference Strategies</h3>
-      <p>Once the target goal is identified, the inference engine (<code>inference_engine.js</code>) solves it using
-        either of two classical reasoning modes [1]:</p>
-      <p><strong>Backward Chaining (Goal-Driven Search):</strong> Begins with the question's target predicate and works
-        backward through matching <code>THEN</code> rules, verifying each <code>IF</code> condition via Depth-First
-        Search (DFS) with visited-node cycle protection.</p>
-      <p><strong>Forward Chaining (Data-Driven Closure):</strong> Scans all rules $R$ against known facts $F$, firing
-        satisfied rules repeatedly to derive new facts until no further rules apply, then checks whether the target goal
-        holds.</p>
+      <p>Once the goal query is extracted, the engine (<code>inference_engine.js</code>) can resolve it using either of two classical symbolic inference modes [1]:</p>
+      <p><strong>Backward Chaining (Goal-Driven Search):</strong> Starting from the target goal predicate, the engine searches for rules whose <code>THEN</code> head matches the goal. It treats each condition in the rule body as a sub-goal, verifying them recursively via Depth-First Search (DFS). To prevent infinite recursion caused by circular rules, active paths are monitored using a visited set.</p>
+      <p><strong>Forward Chaining (Data-Driven Closure):</strong> Starting with the initial set of known facts $F$, the engine repeatedly scans all rules $R$, firing any rule whose conditions are fully satisfied to derive new facts. This iterative matching continues until deductive closure is reached (no further facts can be deduced), after which it simply checks if the target goal exists in the expanded knowledge base.</p>
 
       <!-- Figure 2 -->
       <div class="figure-block">
         <img src="screenshots/2_multihop_reasoning.png" alt="Backward Chaining Proof Trace">
-        <div class="figure-caption">Fig. 2. Backward Chaining proof trace verifying exam eligibility across chained
-          rules R4 &rarr; R3 &rarr; R2 &rarr; R1 in 8 proof hops.</div>
+        <div class="figure-caption">Fig. 2. Backward Chaining proof trace verifying exam eligibility across chained rules R4 &rarr; R3 &rarr; R2 &rarr; R1 in 8 proof hops.</div>
       </div>
 
       <!-- Section IV -->
       <h2 class="section-heading">IV. CORE SYMBOLIC AI IMPLEMENTATION</h2>
-      <p>The core logic is written in modular JavaScript with zero external dependencies. Listing 1 shows the
-        deterministic Knowledge Base parser and the Backward Chaining proof routine.</p>
+      <p>The entire system is implemented in modular ES6 JavaScript with zero third-party libraries. Listing 1 displays the deterministic knowledge base parser and the recursive Backward Chaining proof routine.</p>
 
       <!-- Code Box -->
       <div class="code-box">// === MODULE 1: Knowledge Base Construction (kb_parser.js) ===
@@ -759,10 +725,7 @@
 
       <!-- Section V -->
       <h2 class="section-heading">V. ANSWER GENERATION, EVALUATION &amp; RESULTS</h2>
-      <p>After inference completes, the output module displays the final decision alongside the ordered sequence of
-        matched facts, fired rules, and execution time. To test reliability, I ran a 10-query benchmark suite
-        (<code>evaluator.js</code>) covering direct 1-hop lookups, multi-hop eligibility deductions, and unprovable
-        negative queries under the Closed-World Assumption.</p>
+      <p>Once inference completes, DocLogic presents the final answer along with an explicit proof trace that records every ground fact accessed, each rule triggered, and the exact millisecond latency. To systematically evaluate performance, I constructed a 10-query benchmark suite (<code>evaluator.js</code>) testing three core reasoning challenges: direct 1-hop fact retrieval, multi-rule eligibility derivations, and negative queries evaluated under the Closed-World Assumption (CWA).</p>
 
       <!-- Table 1 -->
       <div class="table-container">
@@ -851,12 +814,7 @@
         </table>
       </div>
 
-      <p><strong>Evaluation Summary &amp; Limitations:</strong> Across all 10 test queries (TC01&ndash;TC10), the system
-        scored <strong>100% Accuracy (10/10)</strong>, <strong>Precision = 1.0</strong>, and <strong>Recall =
-          1.0</strong>, with an average latency of <strong>0.04 ms</strong>. Under the Closed-World Assumption,
-        unprovable eligibility queries (TC09 and TC10) cleanly return <code>UNPROVABLE</code> instead of guessing. The
-        main practical boundary is that uploaded policy files and user queries must follow structured syntax templates
-        rather than free-form prose.</p>
+      <p><strong>Evaluation Summary &amp; System Constraints:</strong> Across all 10 benchmark queries (TC01&ndash;TC10), the system achieved <strong>100% Accuracy (10/10)</strong> with <strong>Precision = 1.0</strong> and <strong>Recall = 1.0</strong>, maintaining an average latency of just <strong>0.04 ms</strong> running completely client-side in the browser. For unprovable negative queries (such as TC09 and TC10, where a student has unpaid fees or missing lab work), the engine strictly enforces the Closed-World Assumption: instead of guessing or returning ungrounded answers, it safely reports <code>UNPROVABLE</code>. The only practical trade-off is that policy files and queries must follow structured syntactic templates rather than arbitrary, unformatted prose.</p>
 
       <!-- Figure 3 -->
       <div class="figure-block">
@@ -867,10 +825,7 @@
 
       <!-- Section VI -->
       <h2 class="section-heading">VI. CONCLUSION</h2>
-      <p>This assignment shows that a classical Symbolic AI pipeline&mdash;combining First-Order Logic triples,
-        Horn-clause rules, and Forward/Backward Chaining&mdash;can solve multi-hop policy Question Answering accurately
-        without NLP or RAG. Every answer comes with an auditable step-by-step proof trace, aligning directly with Course
-        Outcomes CO-1 through CO-5.</p>
+      <p>This project demonstrates that classical Symbolic Artificial Intelligence provides an optimal, fail-safe foundation for compliance-critical document question answering. By representing university regulations as First-Order Logic ground facts and Horn-clause rules, and reasoning over them with Backward and Forward Chaining, DocLogic delivers 100% deterministic accuracy, zero hallucination, sub-millisecond execution, and a complete explanatory audit trail. The design and implementation successfully fulfill all Course Outcomes (CO-1 through CO-5) for AID201A.</p>
 
       <!-- References -->
       <h2 class="section-heading">REFERENCES</h2>
