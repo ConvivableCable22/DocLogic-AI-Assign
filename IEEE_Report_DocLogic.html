@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Deterministic Symbolic AI Document QA System — IEEE Report (AID201A)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
   <style>
     @page {
       size: A4 portrait;
       margin: 0.6in 0.55in 0.6in 0.55in;
     }
-    * { box-sizing: border-box; }
-    html, body {
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
       margin: 0;
       padding: 0;
       background: #e2e8f0;
@@ -35,13 +43,16 @@
       padding: 10px 20px;
       border-bottom: 2px solid #334155;
       font-family: "Plus Jakarta Sans", sans-serif;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
-    .toolbar-left, .toolbar-right {
+
+    .toolbar-left,
+    .toolbar-right {
       display: flex;
       align-items: center;
       gap: 12px;
     }
+
     .btn-toolbar {
       display: inline-flex;
       align-items: center;
@@ -57,19 +68,23 @@
       transition: all 0.15s ease;
       cursor: pointer;
     }
+
     .btn-toolbar:hover {
       background: #334155;
       border-color: #64748b;
       transform: translateY(-1px);
     }
+
     .btn-primary-toolbar {
       background: #2563eb;
       border-color: #3b82f6;
       color: #fff;
     }
+
     .btn-primary-toolbar:hover {
       background: #1d4ed8;
     }
+
     .toolbar-title {
       font-size: 13px;
       font-weight: 700;
@@ -78,6 +93,7 @@
       align-items: center;
       gap: 8px;
     }
+
     .badge-ieee {
       background: #BEF264;
       color: #0f172a;
@@ -95,7 +111,7 @@
       margin: 24px auto 60px auto;
       background: #ffffff;
       padding: 0.7in 0.65in;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.08);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
       border-radius: 2px;
       font-family: "Times New Roman", Times, Georgia, serif;
       font-size: 9.8pt;
@@ -113,19 +129,22 @@
       line-height: 1.35;
       background: #fff;
     }
+
     .ruas-header-box .signatures {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 6px;
+      margin-top: 14px;
+      padding-top: 8px;
       font-size: 8pt;
-      color: #444;
-      border-bottom: 1px dashed #bbb;
-      padding-bottom: 4px;
+      color: #333;
+      border-top: 1px dashed #bbb;
     }
+
     .ruas-title-block {
       text-align: center;
       margin-bottom: 8px;
     }
+
     .ruas-univ-name {
       font-size: 11pt;
       font-weight: 800;
@@ -133,11 +152,13 @@
       letter-spacing: 0.5px;
       color: #000;
     }
+
     .ruas-faculty-name {
       font-size: 9.5pt;
       font-weight: 700;
       color: #333;
     }
+
     .ruas-meta-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -147,13 +168,16 @@
       padding: 6px 0;
       margin-bottom: 8px;
     }
+
     .ruas-meta-item {
       font-size: 8pt;
     }
+
     .ruas-meta-label {
       font-weight: 700;
       color: #111;
     }
+
     .ruas-rubric-table {
       width: 100%;
       border-collapse: collapse;
@@ -161,15 +185,19 @@
       margin-bottom: 8px;
       border: 1px solid #000;
     }
-    .ruas-rubric-table th, .ruas-rubric-table td {
+
+    .ruas-rubric-table th,
+    .ruas-rubric-table td {
       border: 1px solid #000;
       padding: 4px 6px;
     }
+
     .ruas-rubric-table th {
       background: #f1f5f9;
       font-weight: 700;
       text-align: center;
     }
+
     .ruas-notes {
       font-size: 7.5pt;
       line-height: 1.3;
@@ -177,6 +205,7 @@
       border-top: 1px dashed #999;
       padding-top: 6px;
     }
+
     .ruas-problem-stmt {
       margin-top: 6px;
       padding: 6px 8px;
@@ -190,6 +219,7 @@
       text-align: center;
       margin: 18px 0 16px 0;
     }
+
     .paper-title {
       font-family: "Times New Roman", Times, serif;
       font-size: 16pt;
@@ -198,11 +228,13 @@
       margin: 0 0 10px 0;
       color: #000;
     }
+
     .author-name {
       font-size: 11pt;
       font-weight: bold;
       margin-bottom: 2px;
     }
+
     .author-affil {
       font-size: 9pt;
       color: #222;
@@ -222,15 +254,18 @@
       margin-bottom: 10px;
       line-height: 1.28;
     }
+
     .abstract-label {
       font-weight: bold;
       font-style: italic;
     }
+
     .keywords-block {
       font-size: 8.8pt;
       margin-top: 5px;
       font-style: italic;
     }
+
     .keywords-label {
       font-weight: bold;
       font-style: italic;
@@ -247,6 +282,7 @@
       letter-spacing: 0.4px;
       break-after: avoid;
     }
+
     h3.sub-heading {
       font-family: "Times New Roman", Times, serif;
       font-size: 9.2pt;
@@ -261,13 +297,17 @@
       margin: 0 0 5px 0;
       text-indent: 1.2em;
     }
-    p.no-indent { text-indent: 0; }
+
+    p.no-indent {
+      text-indent: 0;
+    }
 
     /* Tables */
     .table-container {
       margin: 8px 0;
       break-inside: avoid;
     }
+
     table.ieee-table {
       width: 100%;
       border-collapse: collapse;
@@ -277,6 +317,7 @@
       border-top: 1.5px solid #000;
       border-bottom: 1.5px solid #000;
     }
+
     table.ieee-table th {
       border-bottom: 1px solid #000;
       padding: 3.5px 3px;
@@ -285,16 +326,27 @@
       text-align: center;
       background: #fafafa;
     }
+
     table.ieee-table td {
       padding: 3px 3px;
       border-bottom: 0.5px solid #e2e8f0;
     }
+
     table.ieee-table tr:last-child td {
       border-bottom: none;
     }
-    .text-center { text-align: center; }
-    .text-right { text-align: right; }
-    .font-mono { font-family: "JetBrains Mono", "Courier New", monospace; }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+
+    .font-mono {
+      font-family: "JetBrains Mono", "Courier New", monospace;
+    }
 
     /* Figures */
     .figure-block {
@@ -302,6 +354,7 @@
       text-align: center;
       break-inside: avoid;
     }
+
     .figure-block img {
       width: 100%;
       border: 1px solid #475569;
@@ -310,6 +363,7 @@
       margin-bottom: 4px;
       background: #fff;
     }
+
     .figure-caption {
       font-size: 7.8pt;
       font-weight: bold;
@@ -341,6 +395,7 @@
       font-size: 7.8pt;
       line-height: 1.3;
     }
+
     ol.ieee-refs li {
       margin-bottom: 4px;
       text-indent: 0;
@@ -352,12 +407,15 @@
         margin: 10px auto;
         padding: 16px;
       }
+
       .paper-body {
         column-count: 1;
       }
+
       .ruas-meta-grid {
         grid-template-columns: repeat(2, 1fr);
       }
+
       .toolbar-title {
         display: none;
       }
@@ -368,24 +426,29 @@
       body {
         background: #fff;
       }
+
       .reader-toolbar {
         display: none !important;
       }
+
       .paper-wrapper {
         margin: 0;
         padding: 0;
         max-width: 100%;
         box-shadow: none;
       }
+
       .ruas-header-box {
         break-inside: avoid;
       }
+
       .figure-block img {
         border-color: #000;
       }
     }
   </style>
 </head>
+
 <body>
 
   <!-- Screen Reader Toolbar (Hidden in Print) -->
@@ -401,11 +464,13 @@
       </div>
     </div>
     <div class="toolbar-right">
-      <a href="https://github.com/ConvivableCable22/DocLogic-AI-Assign" target="_blank" rel="noopener noreferrer" class="btn-toolbar" title="View GitHub Source Code">
+      <a href="https://github.com/ConvivableCable22/DocLogic-AI-Assign" target="_blank" rel="noopener noreferrer"
+        class="btn-toolbar" title="View GitHub Source Code">
         <span>🐙</span>
         <span>Source Code</span>
       </a>
-      <a href="https://doclogic.aceaj.workers.dev/" target="_blank" rel="noopener noreferrer" class="btn-toolbar" title="Open Live Website">
+      <a href="https://doclogic.aceaj.workers.dev/" target="_blank" rel="noopener noreferrer" class="btn-toolbar"
+        title="Open Live Website">
         <span>🌐</span>
         <span>Website</span>
       </a>
@@ -425,25 +490,25 @@
 
     <!-- RUAS Evaluation Scheme & Rubric Block (Page 1 in Submitted Coursework) -->
     <div class="ruas-header-box">
-      <div class="signatures">
-        <span>Signature of First Examiner: _______________________</span>
-        <span>Signature of Second Examiner: _______________________</span>
-      </div>
       <div class="ruas-title-block">
         <div class="ruas-faculty-name">Faculty of Engineering &amp; Technology</div>
         <div class="ruas-univ-name">Ramaiah University of Applied Sciences</div>
       </div>
       <div class="ruas-meta-grid">
-        <div class="ruas-meta-item"><span class="ruas-meta-label">Department:</span> Computer Science and Engineering</div>
+        <div class="ruas-meta-item"><span class="ruas-meta-label">Department:</span> Computer Science and Engineering
+        </div>
         <div class="ruas-meta-item"><span class="ruas-meta-label">Programme:</span> B. Tech.</div>
         <div class="ruas-meta-item"><span class="ruas-meta-label">Semester / Batch:</span> 3rd / 2025</div>
         <div class="ruas-meta-item"><span class="ruas-meta-label">Submission Date:</span> 20th Nov 2026</div>
         <div class="ruas-meta-item"><span class="ruas-meta-label">Course Code:</span> AID201A</div>
         <div class="ruas-meta-item"><span class="ruas-meta-label">Course Title:</span> Artificial Intelligence</div>
         <div class="ruas-meta-item"><span class="ruas-meta-label">Course Leader:</span> M Tanushri</div>
-        <div class="ruas-meta-item"><span class="ruas-meta-label">Assignment:</span> Assignment &ndash; 1 (Component &ndash; CET A)</div>
-        <div class="ruas-meta-item" style="grid-column: span 2;"><span class="ruas-meta-label">Name of Student:</span> Arnav Jhawar</div>
-        <div class="ruas-meta-item" style="grid-column: span 2;"><span class="ruas-meta-label">Register No:</span> 25ETAI410018</div>
+        <div class="ruas-meta-item"><span class="ruas-meta-label">Assignment:</span> Assignment &ndash; 1 (Component
+          &ndash; CET A)</div>
+        <div class="ruas-meta-item" style="grid-column: span 2;"><span class="ruas-meta-label">Name of Student:</span>
+          Arnav Jhawar</div>
+        <div class="ruas-meta-item" style="grid-column: span 2;"><span class="ruas-meta-label">Register No:</span>
+          25ETAI410018</div>
       </div>
 
       <table class="ruas-rubric-table">
@@ -503,29 +568,49 @@
       </table>
 
       <div class="ruas-notes">
-        <strong>Examiner &amp; Submission Notes:</strong> Documental evidence for all components (reports, code listings, execution screenshots, and test benchmarks) is attached in order. First Examiner comments are to be marked in RED ink; Second Examiner comments in GREEN ink. If variation between examiners lies within &plusmn;3 marks, First Examiner marks are final; otherwise resolved with Chairman BoE.
+        <strong>Examiner &amp; Submission Notes:</strong> Documental evidence for all components (reports, code
+        listings, execution screenshots, and test benchmarks) is attached in order. First Examiner comments are to be
+        marked in RED ink; Second Examiner comments in GREEN ink. If variation between examiners lies within &plusmn;3
+        marks, First Examiner marks are final; otherwise resolved with Chairman BoE.
       </div>
       <div class="ruas-problem-stmt">
-        <strong>Problem Statement (Part A &ndash; 15 Marks):</strong> Design and develop an AI-based Document Question Answering System without using NLP or RAG techniques, utilizing symbolic knowledge representation, rules, search, and logical inference.
+        <strong>Problem Statement (Part A &ndash; 15 Marks):</strong> Design and develop an AI-based Document Question
+        Answering System without using NLP or RAG techniques, utilizing symbolic knowledge representation, rules,
+        search, and logical inference.
         <div style="margin-top: 5px; font-size: 7.8pt; color: #334155;">
-          <strong>Source Code:</strong> <a href="https://github.com/ConvivableCable22/DocLogic-AI-Assign" target="_blank" rel="noopener noreferrer" style="color: #0284c7; text-decoration: underline;">https://github.com/ConvivableCable22/DocLogic-AI-Assign</a> &nbsp;&bull;&nbsp;
-          <strong>Website:</strong> <a href="https://doclogic.aceaj.workers.dev/" target="_blank" rel="noopener noreferrer" style="color: #0284c7; text-decoration: underline;">https://doclogic.aceaj.workers.dev/</a>
+          <strong>Source Code:</strong> <a href="https://github.com/ConvivableCable22/DocLogic-AI-Assign"
+            target="_blank" rel="noopener noreferrer"
+            style="color: #0284c7; text-decoration: underline;">https://github.com/ConvivableCable22/DocLogic-AI-Assign</a>
+          &nbsp;&bull;&nbsp;
+          <strong>Website:</strong> <a href="https://doclogic.aceaj.workers.dev/" target="_blank"
+            rel="noopener noreferrer"
+            style="color: #0284c7; text-decoration: underline;">https://doclogic.aceaj.workers.dev/</a>
         </div>
+      </div>
+      <div class="signatures">
+        <span>Signature of First Examiner: _______________________</span>
+        <span>Signature of Second Examiner: _______________________</span>
       </div>
     </div>
 
     <!-- Paper Title and Author Banner -->
     <header class="paper-header">
-      <h1 class="paper-title">Deterministic Symbolic AI Document Question Answering System Using First-Order Logic and Chaining Inference</h1>
+      <h1 class="paper-title">Deterministic Symbolic AI Document Question Answering System Using First-Order Logic and
+        Chaining Inference</h1>
       <div class="author-name">Arnav Jhawar (Reg. No: 25ETAI410018)</div>
       <div class="author-affil">
         Department of Computer Science and Engineering, Faculty of Engineering &amp; Technology<br>
         M.S. Ramaiah University of Applied Sciences, Bengaluru, India
       </div>
-      <div class="project-links" style="margin-top: 8px; font-size: 8.5pt; color: #1e293b; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-        <strong>Source Code:</strong> <a href="https://github.com/ConvivableCable22/DocLogic-AI-Assign" target="_blank" rel="noopener noreferrer" style="color: #2563eb; text-decoration: underline; font-weight: 600;">https://github.com/ConvivableCable22/DocLogic-AI-Assign</a>
+      <div class="project-links"
+        style="margin-top: 8px; font-size: 8.5pt; color: #1e293b; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <strong>Source Code:</strong> <a href="https://github.com/ConvivableCable22/DocLogic-AI-Assign" target="_blank"
+          rel="noopener noreferrer"
+          style="color: #2563eb; text-decoration: underline; font-weight: 600;">https://github.com/ConvivableCable22/DocLogic-AI-Assign</a>
         &nbsp;&bull;&nbsp;
-        <strong>Website:</strong> <a href="https://doclogic.aceaj.workers.dev/" target="_blank" rel="noopener noreferrer" style="color: #2563eb; text-decoration: underline; font-weight: 600;">https://doclogic.aceaj.workers.dev/</a>
+        <strong>Website:</strong> <a href="https://doclogic.aceaj.workers.dev/" target="_blank"
+          rel="noopener noreferrer"
+          style="color: #2563eb; text-decoration: underline; font-weight: 600;">https://doclogic.aceaj.workers.dev/</a>
       </div>
     </header>
 
@@ -534,105 +619,143 @@
 
       <!-- Abstract & Keywords -->
       <div class="abstract-container">
-        <span class="abstract-label">Abstract</span>&mdash;Most modern Document Question Answering (QA) tools rely on statistical Natural Language Processing (NLP) and Retrieval-Augmented Generation (RAG). While useful for general text, those approaches can hallucinate answers and rarely show clear, verifiable steps for how a conclusion was reached. Following the classical Artificial Intelligence principles covered in AID201A, this paper presents a rule-based Document QA system built entirely without NLP, embeddings, or large language models. Instead, it parses structured university policy text into First-Order Logic (FOL) ground triples and Horn-clause rules, then answers queries using both Backward Chaining (goal-driven Depth-First Search) and Forward Chaining (data-driven deductive closure). Tested against a 10-query evaluation suite covering single-fact lookups, multi-rule eligibility checks, and unprovable Closed-World queries, the engine achieves 100% accuracy in under a millisecond.
+        <span class="abstract-label">Abstract</span>&mdash;Most modern Document Question Answering (QA) tools rely on
+        statistical Natural Language Processing (NLP) and Retrieval-Augmented Generation (RAG). While useful for general
+        text, those approaches can hallucinate answers and rarely show clear, verifiable steps for how a conclusion was
+        reached. Following the classical Artificial Intelligence principles covered in AID201A, this paper presents a
+        rule-based Document QA system built entirely without NLP, embeddings, or large language models. Instead, it
+        parses structured university policy text into First-Order Logic (FOL) ground triples and Horn-clause rules, then
+        answers queries using both Backward Chaining (goal-driven Depth-First Search) and Forward Chaining (data-driven
+        deductive closure). Tested against a 10-query evaluation suite covering single-fact lookups, multi-rule
+        eligibility checks, and unprovable Closed-World queries, the engine achieves 100% accuracy in under a
+        millisecond.
         <div class="keywords-block">
-          <span class="keywords-label">Index Terms</span>&mdash;Symbolic AI, Knowledge Representation, First-Order Logic, Horn Clauses, Forward Chaining, Backward Chaining, Rule-Based QA.
+          <span class="keywords-label">Index Terms</span>&mdash;Symbolic AI, Knowledge Representation, First-Order
+          Logic, Horn Clauses, Forward Chaining, Backward Chaining, Rule-Based QA.
         </div>
       </div>
 
       <!-- Section I -->
       <h2 class="section-heading">I. INTRODUCTION</h2>
-      <p>Answering questions about academic regulations&mdash;such as exam eligibility, attendance thresholds, or fee clearance&mdash;demands exact rule compliance and clear traceability. Statistical NLP models and vector-based RAG pipelines work well for open-ended text search, but they are probabilistic by nature and cannot guarantee strict logical consistency across multi-step conditions [1].</p>
-      <p>To solve this problem without using NLP libraries or neural models, I designed a knowledge-based agent grounded in symbolic representation and logical inference [1], [2]. Using the <em>MSRUAS B.Tech Academic &amp; Examination Eligibility Policy</em> as the target domain, the system separates declarative policy rules from the reasoning code so every decision can be traced back to exact facts and rules.</p>
+      <p>Answering questions about academic regulations&mdash;such as exam eligibility, attendance thresholds, or fee
+        clearance&mdash;demands exact rule compliance and clear traceability. Statistical NLP models and vector-based
+        RAG pipelines work well for open-ended text search, but they are probabilistic by nature and cannot guarantee
+        strict logical consistency across multi-step conditions [1].</p>
+      <p>To solve this problem without using NLP libraries or neural models, I designed a knowledge-based agent grounded
+        in symbolic representation and logical inference [1], [2]. Using the <em>MSRUAS B.Tech Academic &amp;
+          Examination Eligibility Policy</em> as the target domain, the system separates declarative policy rules from
+        the reasoning code so every decision can be traced back to exact facts and rules.</p>
 
       <!-- Section II -->
       <h2 class="section-heading">II. DOCUMENT PROCESSING &amp; KNOWLEDGE REPRESENTATION</h2>
-      <p>The parser module (<code>kb_parser.js</code>) reads plain-text policy documents and converts them line by line into a structured Knowledge Base $KB = (F, R)$ using deterministic string matching:</p>
-      <p><strong>Ground Fact Triples ($F$):</strong> Student records are split into predicate triples written as <code>Predicate(Subject, Object)</code>&mdash;for example, <code>attendance(Rahul, 85)</code> and <code>fee_status(Rahul, cleared)</code>.</p>
-      <p><strong>Horn-Clause Production Rules ($R$):</strong> Policy conditions are stored as definite Horn rules of the form $C_1 \land C_2 \land \dots \land C_n \Rightarrow H$, supporting numeric and boolean comparisons ($\ge$, $\le$, $==$, $!=$) [2].</p>
-      <p><strong>Why This Representation Fits:</strong> Storing facts as relational triples and rules as Horn clauses avoids ambiguity in numeric comparisons (such as checking whether attendance is at least 75% and CIE marks are at least 20) while letting intermediate conclusions chain cleanly into higher-level decisions [3].</p>
+      <p>The parser module (<code>kb_parser.js</code>) reads plain-text policy documents and converts them line by line
+        into a structured Knowledge Base $KB = (F, R)$ using deterministic string matching:</p>
+      <p><strong>Ground Fact Triples ($F$):</strong> Student records are split into predicate triples written as
+        <code>Predicate(Subject, Object)</code>&mdash;for example, <code>attendance(Rahul, 85)</code> and
+        <code>fee_status(Rahul, cleared)</code>.</p>
+      <p><strong>Horn-Clause Production Rules ($R$):</strong> Policy conditions are stored as definite Horn rules of the
+        form $C_1 \land C_2 \land \dots \land C_n \Rightarrow H$, supporting numeric and boolean comparisons ($\ge$,
+        $\le$, $==$, $!=$) [2].</p>
+      <p><strong>Why This Representation Fits:</strong> Storing facts as relational triples and rules as Horn clauses
+        avoids ambiguity in numeric comparisons (such as checking whether attendance is at least 75% and CIE marks are
+        at least 20) while letting intermediate conclusions chain cleanly into higher-level decisions [3].</p>
 
       <!-- Figure 1 -->
       <div class="figure-block">
-        <img src="screenshots/1_kb_construction.png" alt="DocLogic Policy Document Parser and Knowledge Base Construction">
-        <div class="figure-caption">Fig. 1. Policy document parser and Symbolic Knowledge Base viewer displaying 20 extracted FOL ground triples and 6 Horn-clause rules.</div>
+        <img src="screenshots/1_kb_construction.png"
+          alt="DocLogic Policy Document Parser and Knowledge Base Construction">
+        <div class="figure-caption">Fig. 1. Policy document parser and Symbolic Knowledge Base viewer displaying 20
+          extracted FOL ground triples and 6 Horn-clause rules.</div>
       </div>
 
       <!-- Section III -->
       <h2 class="section-heading">III. QUESTION PROCESSING &amp; REASONING ENGINE</h2>
       <h3 class="sub-heading">A. Deterministic Goal Extraction</h3>
-      <p>Rather than using an NLP tokenizer, user questions are matched against deterministic regular-expression patterns. Questions like <em>"Can Rahul sit for exam?"</em> or <em>"What is the attendance of Priya?"</em> are converted directly into structured goal queries of the form <code>Goal(Entity, TargetPredicate, ExpectedValue)</code>.</p>
+      <p>Rather than using an NLP tokenizer, user questions are matched against deterministic regular-expression
+        patterns. Questions like <em>"Can Rahul sit for exam?"</em> or <em>"What is the attendance of Priya?"</em> are
+        converted directly into structured goal queries of the form
+        <code>Goal(Entity, TargetPredicate, ExpectedValue)</code>.</p>
 
       <h3 class="sub-heading">B. Dual Chaining Inference Strategies</h3>
-      <p>Once the target goal is identified, the inference engine (<code>inference_engine.js</code>) solves it using either of two classical reasoning modes [1]:</p>
-      <p><strong>Backward Chaining (Goal-Driven Search):</strong> Begins with the question's target predicate and works backward through matching <code>THEN</code> rules, verifying each <code>IF</code> condition via Depth-First Search (DFS) with visited-node cycle protection.</p>
-      <p><strong>Forward Chaining (Data-Driven Closure):</strong> Scans all rules $R$ against known facts $F$, firing satisfied rules repeatedly to derive new facts until no further rules apply, then checks whether the target goal holds.</p>
+      <p>Once the target goal is identified, the inference engine (<code>inference_engine.js</code>) solves it using
+        either of two classical reasoning modes [1]:</p>
+      <p><strong>Backward Chaining (Goal-Driven Search):</strong> Begins with the question's target predicate and works
+        backward through matching <code>THEN</code> rules, verifying each <code>IF</code> condition via Depth-First
+        Search (DFS) with visited-node cycle protection.</p>
+      <p><strong>Forward Chaining (Data-Driven Closure):</strong> Scans all rules $R$ against known facts $F$, firing
+        satisfied rules repeatedly to derive new facts until no further rules apply, then checks whether the target goal
+        holds.</p>
 
       <!-- Figure 2 -->
       <div class="figure-block">
         <img src="screenshots/2_multihop_reasoning.png" alt="Backward Chaining Proof Trace">
-        <div class="figure-caption">Fig. 2. Backward Chaining proof trace verifying exam eligibility across chained rules R4 &rarr; R3 &rarr; R2 &rarr; R1 in 8 proof hops.</div>
+        <div class="figure-caption">Fig. 2. Backward Chaining proof trace verifying exam eligibility across chained
+          rules R4 &rarr; R3 &rarr; R2 &rarr; R1 in 8 proof hops.</div>
       </div>
 
       <!-- Section IV -->
       <h2 class="section-heading">IV. CORE SYMBOLIC AI IMPLEMENTATION</h2>
-      <p>The core logic is written in modular JavaScript with zero external dependencies. Listing 1 shows the deterministic Knowledge Base parser and the Backward Chaining proof routine.</p>
+      <p>The core logic is written in modular JavaScript with zero external dependencies. Listing 1 shows the
+        deterministic Knowledge Base parser and the Backward Chaining proof routine.</p>
 
       <!-- Code Box -->
       <div class="code-box">// === MODULE 1: Knowledge Base Construction (kb_parser.js) ===
-export function parseDocumentToKB(rawText) {
-  const facts = [], rules = [];
-  rawText.split(/\r?\n/).map(l => l.trim()).filter(l => l && !l.startsWith('#')).forEach((line, idx) => {
-    if (line.toUpperCase().startsWith('IF ') && line.includes(' THEN ')) {
-      const [ifPart, thenPart] = line.slice(3).split(/\s+THEN\s+/i);
-      const conditions = ifPart.split(/\s+AND\s+/i).map(c => {
+        export function parseDocumentToKB(rawText) {
+        const facts = [], rules = [];
+        rawText.split(/\r?\n/).map(l => l.trim()).filter(l => l && !l.startsWith('#')).forEach((line, idx) => {
+        if (line.toUpperCase().startsWith('IF ') && line.includes(' THEN ')) {
+        const [ifPart, thenPart] = line.slice(3).split(/\s+THEN\s+/i);
+        const conditions = ifPart.split(/\s+AND\s+/i).map(c => {
         const [, attr, op, val] = c.trim().match(/^(\w+)\s*(&gt;=|&lt;=|==|!=|&gt;|&lt;)\s*(\S+)$/);
         return { attr, op, val: isNaN(val) ? val : Number(val) };
-      });
-      const [hAttr, hVal] = thenPart.trim().split(/\s*=\s*/);
-      rules.push({ id: `R${rules.length + 1}`, conditions, conclusion: { attr: hAttr, val: hVal } });
-    } else {
-      const [subject, predicate, object] = line.split(/\s+/);
-      if (subject && predicate && object !== undefined)
+        });
+        const [hAttr, hVal] = thenPart.trim().split(/\s*=\s*/);
+        rules.push({ id: `R${rules.length + 1}`, conditions, conclusion: { attr: hAttr, val: hVal } });
+        } else {
+        const [subject, predicate, object] = line.split(/\s+/);
+        if (subject && predicate && object !== undefined)
         facts.push({ subject, predicate, object: isNaN(object) ? object : Number(object) });
-    }
-  });
-  return { facts, rules };
-}
+        }
+        });
+        return { facts, rules };
+        }
 
-// === MODULE 2: Symbolic Inference Engine (inference_engine.js) ===
-function evalCond(actual, op, target) {
-  if (op === '&gt;=') return Number(actual) &gt;= Number(target);
-  if (op === '&lt;=') return Number(actual) &lt;= Number(target);
-  if (op === '==') return String(actual) === String(target);
-  return String(actual) !== String(target);
-}
+        // === MODULE 2: Symbolic Inference Engine (inference_engine.js) ===
+        function evalCond(actual, op, target) {
+        if (op === '&gt;=') return Number(actual) &gt;= Number(target);
+        if (op === '&lt;=') return Number(actual) &lt;= Number(target);
+        if (op === '==') return String(actual) === String(target);
+        return String(actual) !== String(target);
+        }
 
-function backwardProve(entity, attr, expected, kb, trace, visited = new Set()) {
-  const key = `${entity}:${attr}`;
-  if (visited.has(key)) return false;
-  visited.add(key);
+        function backwardProve(entity, attr, expected, kb, trace, visited = new Set()) {
+        const key = `${entity}:${attr}`;
+        if (visited.has(key)) return false;
+        visited.add(key);
 
-  const direct = kb.facts.find(f => f.subject.toLowerCase() === entity.toLowerCase() && f.predicate === attr);
-  if (direct && (expected === null || String(direct.object) === String(expected))) {
-    trace.push(`[FACT] ${direct.subject}.${direct.predicate} = ${direct.object}`);
-    return direct.object;
-  }
+        const direct = kb.facts.find(f => f.subject.toLowerCase() === entity.toLowerCase() && f.predicate === attr);
+        if (direct && (expected === null || String(direct.object) === String(expected))) {
+        trace.push(`[FACT] ${direct.subject}.${direct.predicate} = ${direct.object}`);
+        return direct.object;
+        }
 
-  for (const rule of kb.rules.filter(r => r.conclusion.attr === attr)) {
-    if (expected !== null && String(rule.conclusion.val) !== String(expected)) continue;
-    if (rule.conditions.every(c => backwardProve(entity, c.attr, null, kb, trace, new Set(visited)) !== false 
+        for (const rule of kb.rules.filter(r => r.conclusion.attr === attr)) {
+        if (expected !== null && String(rule.conclusion.val) !== String(expected)) continue;
+        if (rule.conditions.every(c => backwardProve(entity, c.attr, null, kb, trace, new Set(visited)) !== false
         &amp;&amp; evalCond(backwardProve(entity, c.attr, null, kb, [], new Set()), c.op, c.val))) {
-      trace.push(`[RULE ${rule.id}] Derived ${entity}.${attr} = ${rule.conclusion.val}`);
-      return rule.conclusion.val;
-    }
-  }
-  return false;
-}</div>
+        trace.push(`[RULE ${rule.id}] Derived ${entity}.${attr} = ${rule.conclusion.val}`);
+        return rule.conclusion.val;
+        }
+        }
+        return false;
+        }</div>
 
       <!-- Section V -->
       <h2 class="section-heading">V. ANSWER GENERATION, EVALUATION &amp; RESULTS</h2>
-      <p>After inference completes, the output module displays the final decision alongside the ordered sequence of matched facts, fired rules, and execution time. To test reliability, I ran a 10-query benchmark suite (<code>evaluator.js</code>) covering direct 1-hop lookups, multi-hop eligibility deductions, and unprovable negative queries under the Closed-World Assumption.</p>
+      <p>After inference completes, the output module displays the final decision alongside the ordered sequence of
+        matched facts, fired rules, and execution time. To test reliability, I ran a 10-query benchmark suite
+        (<code>evaluator.js</code>) covering direct 1-hop lookups, multi-hop eligibility deductions, and unprovable
+        negative queries under the Closed-World Assumption.</p>
 
       <!-- Table 1 -->
       <div class="table-container">
@@ -647,42 +770,115 @@ function backwardProve(entity, attr, expected, kb, trace, visited = new Set()) {
             </tr>
           </thead>
           <tbody>
-            <tr><td class="text-center font-mono">TC01</td><td>1-hop fact</td><td>What is the attendance of Rahul?</td><td class="text-center font-mono">85</td><td class="text-center font-mono">85 (PASS)</td></tr>
-            <tr><td class="text-center font-mono">TC02</td><td>1-hop fact</td><td>What is the cie_marks of Priya?</td><td class="text-center font-mono">18</td><td class="text-center font-mono">18 (PASS)</td></tr>
-            <tr><td class="text-center font-mono">TC03</td><td>1-hop fact</td><td>What is the fee_status of Amit?</td><td class="text-center font-mono">pending</td><td class="text-center font-mono">pending (PASS)</td></tr>
-            <tr><td class="text-center font-mono">TC04</td><td>1-hop fact</td><td>What is the lab_completed of Sneha?</td><td class="text-center font-mono">true</td><td class="text-center font-mono">true (PASS)</td></tr>
-            <tr><td class="text-center font-mono">TC05</td><td>multi-hop rule</td><td>Is Rahul academically eligible?</td><td class="text-center font-mono">true</td><td class="text-center font-mono">true (PASS)</td></tr>
-            <tr><td class="text-center font-mono">TC06</td><td>multi-hop rule</td><td>Can Rahul sit for exam?</td><td class="text-center font-mono">true</td><td class="text-center font-mono">true (PASS)</td></tr>
-            <tr><td class="text-center font-mono">TC07</td><td>multi-hop rule</td><td>Is Sneha eligible for honors?</td><td class="text-center font-mono">true</td><td class="text-center font-mono">true (PASS)</td></tr>
-            <tr><td class="text-center font-mono">TC08</td><td>multi-hop rule</td><td>Does Priya require condonation?</td><td class="text-center font-mono">true</td><td class="text-center font-mono">true (PASS)</td></tr>
-            <tr><td class="text-center font-mono">TC09</td><td>negative closed-world</td><td>Can Amit sit for exam?</td><td class="text-center font-mono">false</td><td class="text-center font-mono">UNPROVABLE (PASS)</td></tr>
-            <tr><td class="text-center font-mono">TC10</td><td>negative closed-world</td><td>Can Priya sit for exam?</td><td class="text-center font-mono">false</td><td class="text-center font-mono">UNPROVABLE (PASS)</td></tr>
+            <tr>
+              <td class="text-center font-mono">TC01</td>
+              <td>1-hop fact</td>
+              <td>What is the attendance of Rahul?</td>
+              <td class="text-center font-mono">85</td>
+              <td class="text-center font-mono">85 (PASS)</td>
+            </tr>
+            <tr>
+              <td class="text-center font-mono">TC02</td>
+              <td>1-hop fact</td>
+              <td>What is the cie_marks of Priya?</td>
+              <td class="text-center font-mono">18</td>
+              <td class="text-center font-mono">18 (PASS)</td>
+            </tr>
+            <tr>
+              <td class="text-center font-mono">TC03</td>
+              <td>1-hop fact</td>
+              <td>What is the fee_status of Amit?</td>
+              <td class="text-center font-mono">pending</td>
+              <td class="text-center font-mono">pending (PASS)</td>
+            </tr>
+            <tr>
+              <td class="text-center font-mono">TC04</td>
+              <td>1-hop fact</td>
+              <td>What is the lab_completed of Sneha?</td>
+              <td class="text-center font-mono">true</td>
+              <td class="text-center font-mono">true (PASS)</td>
+            </tr>
+            <tr>
+              <td class="text-center font-mono">TC05</td>
+              <td>multi-hop rule</td>
+              <td>Is Rahul academically eligible?</td>
+              <td class="text-center font-mono">true</td>
+              <td class="text-center font-mono">true (PASS)</td>
+            </tr>
+            <tr>
+              <td class="text-center font-mono">TC06</td>
+              <td>multi-hop rule</td>
+              <td>Can Rahul sit for exam?</td>
+              <td class="text-center font-mono">true</td>
+              <td class="text-center font-mono">true (PASS)</td>
+            </tr>
+            <tr>
+              <td class="text-center font-mono">TC07</td>
+              <td>multi-hop rule</td>
+              <td>Is Sneha eligible for honors?</td>
+              <td class="text-center font-mono">true</td>
+              <td class="text-center font-mono">true (PASS)</td>
+            </tr>
+            <tr>
+              <td class="text-center font-mono">TC08</td>
+              <td>multi-hop rule</td>
+              <td>Does Priya require condonation?</td>
+              <td class="text-center font-mono">true</td>
+              <td class="text-center font-mono">true (PASS)</td>
+            </tr>
+            <tr>
+              <td class="text-center font-mono">TC09</td>
+              <td>negative closed-world</td>
+              <td>Can Amit sit for exam?</td>
+              <td class="text-center font-mono">false</td>
+              <td class="text-center font-mono">UNPROVABLE (PASS)</td>
+            </tr>
+            <tr>
+              <td class="text-center font-mono">TC10</td>
+              <td>negative closed-world</td>
+              <td>Can Priya sit for exam?</td>
+              <td class="text-center font-mono">false</td>
+              <td class="text-center font-mono">UNPROVABLE (PASS)</td>
+            </tr>
           </tbody>
         </table>
       </div>
 
-      <p><strong>Evaluation Summary &amp; Limitations:</strong> Across all 10 test queries (TC01&ndash;TC10), the system scored <strong>100% Accuracy (10/10)</strong>, <strong>Precision = 1.0</strong>, and <strong>Recall = 1.0</strong>, with an average latency of <strong>0.04 ms</strong>. Under the Closed-World Assumption, unprovable eligibility queries (TC09 and TC10) cleanly return <code>UNPROVABLE</code> instead of guessing. The main practical boundary is that uploaded policy files and user queries must follow structured syntax templates rather than free-form prose.</p>
+      <p><strong>Evaluation Summary &amp; Limitations:</strong> Across all 10 test queries (TC01&ndash;TC10), the system
+        scored <strong>100% Accuracy (10/10)</strong>, <strong>Precision = 1.0</strong>, and <strong>Recall =
+          1.0</strong>, with an average latency of <strong>0.04 ms</strong>. Under the Closed-World Assumption,
+        unprovable eligibility queries (TC09 and TC10) cleanly return <code>UNPROVABLE</code> instead of guessing. The
+        main practical boundary is that uploaded policy files and user queries must follow structured syntax templates
+        rather than free-form prose.</p>
 
       <!-- Figure 3 -->
       <div class="figure-block">
         <img src="screenshots/3_evaluation_benchmark.png" alt="10-Query Evaluation Benchmark Dashboard">
-        <div class="figure-caption">Fig. 3. 10-Query Evaluation Benchmark Dashboard showing 100% Accuracy, Precision 1, Recall 1, and 0.04 ms average latency.</div>
+        <div class="figure-caption">Fig. 3. 10-Query Evaluation Benchmark Dashboard showing 100% Accuracy, Precision 1,
+          Recall 1, and 0.04 ms average latency.</div>
       </div>
 
       <!-- Section VI -->
       <h2 class="section-heading">VI. CONCLUSION</h2>
-      <p>This assignment shows that a classical Symbolic AI pipeline&mdash;combining First-Order Logic triples, Horn-clause rules, and Forward/Backward Chaining&mdash;can solve multi-hop policy Question Answering accurately without NLP or RAG. Every answer comes with an auditable step-by-step proof trace, aligning directly with Course Outcomes CO-1 through CO-5.</p>
+      <p>This assignment shows that a classical Symbolic AI pipeline&mdash;combining First-Order Logic triples,
+        Horn-clause rules, and Forward/Backward Chaining&mdash;can solve multi-hop policy Question Answering accurately
+        without NLP or RAG. Every answer comes with an auditable step-by-step proof trace, aligning directly with Course
+        Outcomes CO-1 through CO-5.</p>
 
       <!-- References -->
       <h2 class="section-heading">REFERENCES</h2>
       <ol class="ieee-refs">
-        <li>S. Russell and P. Norvig, <em>Artificial Intelligence: A Modern Approach</em>, 4th ed. Hoboken, NJ, USA: Pearson, 2020, ch. 7&ndash;9.</li>
-        <li>N. J. Nilsson, <em>Principles of Artificial Intelligence</em>. Palo Alto, CA, USA: Tioga Publishing Co., 1980.</li>
-        <li>R. J. Brachman and H. J. Levesque, <em>Knowledge Representation and Reasoning</em>. San Francisco, CA, USA: Morgan Kaufmann, 2004.</li>
+        <li>S. Russell and P. Norvig, <em>Artificial Intelligence: A Modern Approach</em>, 4th ed. Hoboken, NJ, USA:
+          Pearson, 2020, ch. 7&ndash;9.</li>
+        <li>N. J. Nilsson, <em>Principles of Artificial Intelligence</em>. Palo Alto, CA, USA: Tioga Publishing Co.,
+          1980.</li>
+        <li>R. J. Brachman and H. J. Levesque, <em>Knowledge Representation and Reasoning</em>. San Francisco, CA, USA:
+          Morgan Kaufmann, 2004.</li>
       </ol>
 
     </div>
   </div>
 
 </body>
+
 </html>
